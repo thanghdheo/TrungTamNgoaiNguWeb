@@ -1,0 +1,61 @@
+﻿<h4>Tra cứu thông tin</h4>
+<hr />
+<div id="main">
+    <div style="min-width:300px" class="border border-dark border-5 rounded">
+        <div style="padding:16px">
+            <div class="form-group">
+                    <label class="control-label">Nhập họ và tên hoặc số điện thoại</label>
+                    <input placeholder="Nhập họ và tên hoặc số điện thoại" id="value" class="form-control" />
+                    <span  id="inputError" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    <input type="button" id="search" value="Tra cứu" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(() => {
+            $('#search').click((e) => {
+                if($('#value').val() != ""){
+                    $.post('/tracuu/ajaxNguoiDung',{value :$('#value').val()},(data) => {
+                        console.log(data);
+                        if(data.length > 0){
+                            if($('.table') != null){
+                                 $(".table").remove();
+                            }
+                            var headers = ["Họ và tên", "Số điện thoại", "Ngày sinh",""];
+                            var table = document.createElement("TABLE");  //makes a table element for the page
+                            table.className = "table table-striped table-bordered table-hover mt-5" ;                           
+
+                            data.forEach((item,index) => {
+                                var row = table.insertRow(index);
+                                row.insertCell(0).innerHTML = item.hoNguoiDung + " " + item.tenNguoiDung;
+                                row.insertCell(1).innerHTML = item.soDienThoai;
+                                var date = new Date(item.ngaySinh);
+                                var newdate= date.getDate() + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear();
+                                row.insertCell(2).innerHTML = newdate;
+                                row.insertCell(3).outerHTML = `<a class = "btn btn-info m-2" href="/TraCuu/TraCuu?cccd=${item.cccd}">Xem kết quả</a>`;
+                            })
+
+                            var header = table.createTHead();
+                            var headerRow = header.insertRow(0);
+                            headers.forEach((item,index) => {
+                                headerRow.insertCell(index).outerHTML = `<th>${item}</th>`;
+                            })
+
+                            $('#main').append(table);
+                        }else{
+                            alert("Chưa có dữ liệu người dùng");
+                        }
+                    });
+                }else{
+                    alert("Vui lòng nhập đầy đủ thông tin");
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿@model Tour_MVC.Models.DuThi
+@if(TempData["Message"] != null)
+{
+    <div class="alert alert-info ">
+        @TempData["Message"]
+    </div>
+}
+<h4>Đăng ký dự thi</h4>
+<hr />
+<div style="min-width:300px" class="border border-dark border-5 rounded">
+        <form style="padding:16px" asp-action="Index" method="post" id="form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Cccd"  class="control-label">Căn cước công dân</label>
+                <input asp-for="Cccd" id="cccd" class="form-control" />
+                <span asp-validation-for="Cccd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaKhoaThi" class="control-label" >Khoá thi</label>
+                <select asp-for="MaKhoaThi" asp-items="ViewBag.selectListKhoaThi" class="form-control">
+                </select>
+                <span asp-validation-for="MaKhoaThi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaTrinhDo" class="control-label">Trình độ</label>
+                <select asp-for="MaTrinhDo" asp-items="ViewBag.selectListTrinhDo" class="form-control">
+                </select>
+                <span asp-validation-for="MaTrinhDo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="submit" value="Đăng ký dự thi" class="btn btn-success" />
+            </div>
+        </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        //$(document).ready(() => {
+        //     $('#form').click((e) => {
+        //        $.post('/duthi/ajaxCheckExist',{cccd :$('#cccd').val()},(data) => {
+        //            alert("dzooo")
+        //            console.log(data);
+        //            checkExist(data);
+        //        });
+        //    });
+        //});
+    </script>
+}

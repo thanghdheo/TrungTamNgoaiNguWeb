@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Tour_MVC.Models.ThiSinh>
+
+<h1>Tra cứu thông tin</h1>
+<h2>@ViewBag.name</h2>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên phòng thi
+            </th>
+            <th>
+                Số báo danh
+            </th>
+            <th>
+                Điểm nghe
+            </th>
+            <th>
+                Điểm đọc
+            </th>
+            <th>
+               Điểm nói
+            </th>
+            <th>
+                Điểm viết
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaPhongNavigation.TenPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sbd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiemNghe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiemDoc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiemNoi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiemViet)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a asp-action='Index'>Tra cứu thông tin</a>
+
