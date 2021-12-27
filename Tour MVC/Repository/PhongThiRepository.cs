@@ -4,17 +4,19 @@ using Tour_MVC.Models;
 
 namespace Tour_MVC.Repository
 {
-    public class KhoaThiRepository 
+    public class PhongThiRepository
     {
         EnglishDbContext _context;
 
-        public KhoaThiRepository(EnglishDbContext context)
+        public PhongThiRepository(EnglishDbContext context)
         {
             this._context = context;
         }
-        public List<KhoaThi> getAll()
+        public List<PhongThi> getAll()
         {
-            return _context.KhoaThis.ToList();
+            return _context.PhongThis.ToList();
         }
+
+       
     }
 }

@@ -21,7 +21,7 @@ namespace Tour_MVC.Models
         public virtual DbSet<GiamThi> GiamThis { get; set; }
         public virtual DbSet<GiaoVien> GiaoViens { get; set; }
         public virtual DbSet<KhoaThi> KhoaThis { get; set; }
-        public virtual DbSet<NguoiDung> NguoiDungs { get; set; }
+        public  DbSet<NguoiDung> NguoiDungs { get; set; }
         public virtual DbSet<PhongThi> PhongThis { get; set; }
         public virtual DbSet<ThiSinh> ThiSinhs { get; set; }
         public virtual DbSet<TrinhDo> TrinhDos { get; set; }

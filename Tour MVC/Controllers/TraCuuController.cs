@@ -22,7 +22,6 @@ namespace Tour_MVC.Controllers
             nguoiDungs = new List<NguoiDung>();
             thiSinhs = new List<ThiSinh>();
         }
-        // GET: TraCuuController
         public IActionResult Index()
         {
             return View();
@@ -38,79 +37,18 @@ namespace Tour_MVC.Controllers
             return View(thiSinhs);
         }
 
+        public IActionResult ThongTin(string cccd)
+        {
+            NguoiDung nguoiDung = _nguoiDung.finddById(cccd);
+            return View(nguoiDung);
+        }
+
         public IActionResult ajaxNguoiDung(string value)
         {
             nguoiDungs = _nguoiDung.DanhSachTraCuu(value);
             return Json(nguoiDungs);
         }
 
-        // GET: TraCuuController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: TraCuuController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: TraCuuController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TraCuuController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: TraCuuController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TraCuuController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: TraCuuController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

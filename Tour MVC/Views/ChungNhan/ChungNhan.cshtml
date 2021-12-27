@@ -1,0 +1,50 @@
+﻿@model Tour_MVC.Models.ThiSinh
+
+<div>
+    <h4>Chúc mừng @Model.CccdNavigation.HoNguoiDung @Model.CccdNavigation.TenNguoiDung</h4>
+    <hr />
+
+    
+    <h5>Thành tích của bạn</h5>
+    <dl class="row">
+        <dt class = "col-sm-3">
+           Họ và tên
+        </dt>
+        <dd class = "col-sm-9">
+           @Model.CccdNavigation.HoNguoiDung @Model.CccdNavigation.TenNguoiDung
+        </dd>
+        <dt class = "col-sm-3">
+            Số báo danh
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Sbd)
+        </dd>
+        <dt class = "col-sm-3">
+           Điểm nghe
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.DiemNghe)
+        </dd>
+        <dt class = "col-sm-3">
+            Điểm đọc
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.DiemDoc)
+        </dd>
+        <dt class = "col-sm-3">
+            Điểm nói
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.DiemNoi)
+        </dd>
+        <dt class = "col-sm-3">
+            Điểm viết
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.DiemViet)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="ChungNhan" asp-action="Index">Chứng nhận kết quả</a>
+</div>
