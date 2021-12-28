@@ -13,7 +13,6 @@
             </div>
         </div>
     </div>
-    <div class="result"></div>
 </div>
 
 @section Scripts {
@@ -26,54 +25,34 @@
                     $.post('/chungnhan/ajaxChungNhanKetQua',{SBD :$('#sbd').val()},(data) => {
                         console.log(data);
                         if(data){
-                             window.location.href = '/ChungNhan/ChungNhan/?maphong=' +data.maPhongNavigation.maPhong +"&cccd=" + data.cccd;
-                            //$('.result').html('');
-                            //var tmp = document.createElement("div");
-                            //tmp.className = 'mt-5'
-                            //tmp.innerHTML = `
-                            //        <h3>Chúc mừng ${data.cccdNavigation.hoNguoiDung + " " +data.cccdNavigation.tenNguoiDung}</h3>
-                            //        <dl class="row mt-3">
-                            //            <dt class = "col-sm-3">
-                            //                Số báo danh
-                            //            </dt>
-                            //            <dd class = "col-sm-9">
-                            //                ${data.sbd}
-                            //            </dd>
-                            //            <dt class = "col-sm-3">
-                            //                Họ và tên
-                            //            </dt>
-                            //            <dd class = "col-sm-9">
-                            //                ${data.cccdNavigation.hoNguoiDung + " " +data.cccdNavigation.tenNguoiDung}
-                            //            </dd>
-                            //            <dt class = "col-sm-3">
-                            //                Điểm nghe
-                            //            </dt>
-                            //            <dd class = "col-sm-9">
-                            //                ${data.diemNghe}
-                            //            </dd>
-                            //             <dt class = "col-sm-3">
-                            //                Điểm nói
-                            //            </dt>
-                            //            <dd class = "col-sm-9">
-                            //                ${data.diemNoi}
-                            //            </dd>
-                            //             <dt class = "col-sm-3">
-                            //                Điểm đọc
-                            //            </dt>
-                            //            <dd class = "col-sm-9">
-                            //                ${data.diemDoc}
-                            //            </dd>
-                            //             <dt class = "col-sm-3">
-                            //                Điểm viết
-                            //            </dt>
-                            //            <dd class = "col-sm-9">
-                            //                ${data.diemViet}
-                            //            </dd>
-                            //        </dl>
-                            //`
-                            //$('.result').append(tmp);
+                            if($('.table') != null){
+                                 $(".table").remove();
+                            }
+                            var headers = ["Số báo danh","Phòng thi","Họ và tên", "Số điện thoại", "Ngày sinh",""];
+                            var table = document.createElement("TABLE");
+                            table.className = "table table-striped table-bordered table-hover mt-5" ;                           
+
+                            data.forEach((item,index) => {
+                                var row = table.insertRow(index);
+                                row.insertCell(0).innerHTML = item.sbd;
+                                row.insertCell(1).innerHTML = item.maPhongNavigation.tenPhong;
+                                row.insertCell(2).innerHTML = item.cccdNavigation.hoNguoiDung + " " + item.cccdNavigation.tenNguoiDung;
+                                row.insertCell(3).innerHTML = item.cccdNavigation.soDienThoai;
+                                var date = new Date(item.cccdNavigation.ngaySinh);
+                                var newdate= date.getDate() + '/' + (date.getMonth() + 1) + '/' +  date.getFullYear();
+                                row.insertCell(4).innerHTML = newdate;
+                                row.insertCell(5).outerHTML = `<a class = "btn btn-info m-2" href="/ChungNhan/ChungNhan/?maphong=${item.maPhongNavigation.maPhong}&cccd=${item.cccd}">Xem kết quả</a>`;
+                            })
+
+                            var header = table.createTHead();
+                            var headerRow = header.insertRow(0);
+                            headers.forEach((item,index) => {
+                                headerRow.insertCell(index).outerHTML = `<th>${item}</th>`;
+                            })
+
+                            $('#main').append(table);
                         }else{
-                            alert("Chưa có dữ liệu người dùng");
+                            alert("Chưa có dữ liệu vui lòng kiểm tra lại");
                         }
                     });
                 }else{

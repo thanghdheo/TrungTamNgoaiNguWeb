@@ -17,6 +17,11 @@ namespace Tour_MVC.Repository
             return _context.PhongThis.ToList();
         }
 
+        public List<PhongThi> PhongThiCombobox(int makhoa)
+        {
+            var qr = _context.PhongThis.Where(s => s.MaKhoaThi == makhoa).ToList();
+            return qr;
+        }
        
     }
 }

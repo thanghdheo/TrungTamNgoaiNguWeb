@@ -20,8 +20,6 @@ namespace Tour_MVC.Controllers
 
         private List<KhoaThi> khoaThis;
 
-        private List<PhongThi> phongThis;
-
         public PhongThiController(EnglishDbContext context)
         {
             _thiSinh = new ThiSinhRepository(context);
@@ -29,7 +27,6 @@ namespace Tour_MVC.Controllers
             _phongThi = new PhongThiRepository(context);
             thiSinhs = new List<ThiSinh>();
             khoaThis = new List<KhoaThi>();
-            phongThis = new List<PhongThi>();
         }
         public IActionResult Index()
         {   
@@ -41,21 +38,22 @@ namespace Tour_MVC.Controllers
             {
                 khoaThis = _khoaThi.getAll();
             }
-            if (phongThis.Count == 0)
-            {
-                phongThis = _phongThi.getAll();
-            }
 
             ViewBag.selectListKhoaThi = new SelectList(khoaThis, "MaKhoaThi", "TenKhoa");
-            ViewBag.selectListPhongThi = new SelectList(phongThis, "MaPhong", "TenPhong");
 
             return View(thiSinhs);
         }
 
         public JsonResult ajaxSearchPhongThi(int maphong,int makhoa) 
         {
-            thiSinhs = _thiSinh.searchPhong(maphong, makhoa);
+            var thiSinhs = _thiSinh.searchPhong(maphong, makhoa);
             return Json(thiSinhs);
+        }
+
+        public JsonResult ajaxPhongCombobox(int MaKhoa)
+        {
+            var phongThis = _phongThi.PhongThiCombobox(MaKhoa);
+            return Json(phongThis);
         }
     }
 }

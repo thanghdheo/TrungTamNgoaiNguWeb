@@ -16,7 +16,7 @@ namespace Tour_MVC.Repository
         public ThiSinh findById(int maphong,string cccd)
         {
             ThiSinh thiSinh = _context.ThiSinhs.Where(s => s.MaPhong == maphong && s.Cccd ==cccd)
-                                                .Include(s => s.MaPhongNavigation)
+                                                .Include(s => s.MaPhongNavigation).ThenInclude(s => s.MaKhoaThiNavigation)
                                                 .Include(s => s.CccdNavigation).FirstOrDefault(); 
             return thiSinh;
         }
@@ -36,11 +36,6 @@ namespace Tour_MVC.Repository
                       {
                           Sbd = ts.Sbd,
                           Cccd = ts.Cccd,
-                          DiemDoc = ts.DiemDoc,
-                          DiemNghe = ts.DiemNghe,
-                          DiemNoi = ts.DiemNoi,
-                          DiemViet = ts.DiemViet,
-                          MaPhong = ts.MaPhong,
                           CccdNavigation = ts.CccdNavigation,
                           MaPhongNavigation = ts.MaPhongNavigation
                       };
@@ -57,7 +52,7 @@ namespace Tour_MVC.Repository
                         .Include(s => s.CccdNavigation).ToList();
         }
 
-        public ThiSinh ChungNhanKetQua(string SBD)
+        public List<ThiSinh> ChungNhanKetQua(string SBD)
         {
             var qr = from ts in _context.ThiSinhs
                      where ts.Sbd == SBD
@@ -65,15 +60,10 @@ namespace Tour_MVC.Repository
                      {
                          Sbd = SBD,
                          Cccd = ts.Cccd,
-                         DiemDoc = ts.DiemDoc,
-                         DiemNghe = ts.DiemNghe,
-                         DiemNoi = ts.DiemNoi,
-                         DiemViet = ts.DiemViet,
-                         MaPhong = ts.MaPhong,
                          CccdNavigation = ts.CccdNavigation,
                          MaPhongNavigation = ts.MaPhongNavigation
                      };
-            return qr.FirstOrDefault();
+            return qr.ToList();
         }
     }
 }

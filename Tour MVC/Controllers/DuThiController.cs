@@ -82,25 +82,5 @@ namespace Tour_MVC
             }
             return View();
         }
-
-        //public string ajaxCheckExist(string cccd)
-        //{
-        //    if (_nguoiDung.Exist(cccd))
-        //    {
-        //        return cccd;
-        //    }
-        //    return "Not Found";
-        //}
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

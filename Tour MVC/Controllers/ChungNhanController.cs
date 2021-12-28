@@ -28,7 +28,7 @@ namespace Tour_MVC.Controllers
 
         public virtual JsonResult ajaxChungNhanKetQua(string SBD)
         {
-            thiSinh = _thiSinh.ChungNhanKetQua(SBD);
+            var thiSinh = _thiSinh.ChungNhanKetQua(SBD);
             return Json(thiSinh);
         }
     }

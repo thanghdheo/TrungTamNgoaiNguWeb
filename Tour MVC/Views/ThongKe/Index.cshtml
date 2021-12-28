@@ -1,0 +1,125 @@
+﻿<h4>Thống kê</h4>
+<hr />    
+<div style="min-width:300px" class="border border-dark border-5 rounded">
+        <div style="padding:16px">
+            <div class="form-group">
+                    <label class="control-label">Ngày bắt đầu khoá thi</label>
+                     <input id="ngaybatdau" type="datetime-local" class="form-control" />
+            </div>
+            <div class="form-group">
+                    <label class="control-label">Ngày kết thúc khoá thi</label>
+                      <input id="ngayketthuc" type="datetime-local" class="form-control" />
+            </div>
+            <div class="form-group">
+                    <input type="button" id="search" value="Thống kê" class="btn btn-success" />
+            </div>
+        </div>
+</div>
+<div class="row mt-4">
+    <div class="col-sm-6">
+        <div class ="card">
+            <div class="card-header">
+               Thống kê
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 h-25" id="bar"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class ="card">
+            <div class="card-header">
+                Thống kê
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 h-25" id="pie"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js"  ></script>
+    <script>
+        $(document).ready(() => {
+            $('#search').click((e) => {
+                    $.post('/thongke/ajaxThongKe',{ngaybatdau :$('#ngaybatdau').val(),ngayketthuc :$('#ngayketthuc').val()},(data) => {
+                        if(data != null){
+                            console.log(data);
+                            getThongKe(data);
+                        }else{
+                            alert("Chưa có dữ liệu vui lòng kiểm tra lại")
+                        }
+                    });
+            });
+        });
+
+        var mybarhart = null;
+        var mypieChart = null;
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function getRandomColorEachEmployee(count) {
+            var data =[];
+            for (var i = 0; i < count; i++) {
+                data.push(getRandomColor());
+            }
+            return data;
+        }
+
+        function getThongKe(data){
+            var lables = ['Số lượng khoá thi', 'Số lượng phòng thi A2','Số lượng phòng thi B1','Số lượng thí sinh A2','Số lượng thí sinh B1'];
+            var datas =[];
+            $.each(data,(index,item) => {
+                datas.push(item);
+            })
+
+            console.log(lables);
+            console.log(datas);
+            if(mybarhart != null){
+                mybarhart.destroy();
+            }
+            var barchart = document.getElementById('bar').getContext('2d');
+            var barchartdata = {
+                    labels: lables,
+                    datasets: [{
+                        label: '',
+                        data: datas,
+                        backgroundColor: getRandomColorEachEmployee(lables.length),
+
+                    }]
+                }
+            mybarhart = new Chart(barchart,{
+                type : 'bar',
+                data:barchartdata,
+            })
+           
+
+            if(mypieChart != null){
+                mypieChart.destroy();
+            }
+            var piechart = document.getElementById('pie').getContext('2d');
+            mypieChart = new Chart(piechart,{
+                type : 'pie',
+                data:{
+                    labels: lables,
+                    datasets: [{
+                        label: 'Bar chart',
+                        data: datas,
+                         backgroundColor: getRandomColorEachEmployee(lables.length),
+
+                    }]
+                }
+            })
+        }
+        
+    </script>
+}

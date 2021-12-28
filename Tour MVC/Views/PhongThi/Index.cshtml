@@ -68,6 +68,20 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         $(document).ready(() => {
+            $.post('/phongthi/ajaxPhongCombobox',{MaKhoa :$('#makhoa').val()},(data) => {
+                      console.log(data);
+                      loadcombobox(data)
+            });
+            $('#makhoa').change((e)=>{
+                 $.post('/phongthi/ajaxPhongCombobox',{MaKhoa :$('#makhoa').val()},(data) => {
+                      console.log(data);
+                      if(data.length > 0){
+                        loadcombobox(data)
+                      }else{
+                           alert("Khoá thi này chưa có phòng thi")
+                      }
+                 });
+            });
             $('#search').click((e) => {
                     $.post('/phongthi/ajaxSearchPhongThi',{MaPhong :$('#maphong').val(),MaKhoa :$('#makhoa').val()},(data) => {
                         console.log(data);
@@ -97,12 +111,23 @@
                             })
 
                             $('#main').append(table);
-                            alert("Tìm thành công");
                         }else{
-                            alert("Chưa có dữ liệu người dùng");
+                            alert("Chưa có dữ liệu vui lòng kiểm tra lại");
                         }
                     });
             });
         });
+
+        function loadcombobox(data){
+            $("#maphong").html("");
+
+                        data.forEach((value,index) =>{
+                                    console.log(value)
+                                    var opt1 = document.createElement("option");
+                                    opt1.value = value.maPhong;
+                                    opt1.text = value.tenPhong;
+                                    document.getElementById("maphong").add(opt1,null);
+                            });
+        }
     </script>
 }

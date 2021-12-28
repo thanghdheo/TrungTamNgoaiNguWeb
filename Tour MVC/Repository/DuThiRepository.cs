@@ -14,8 +14,17 @@ namespace Tour_MVC.Repository
 
         public bool Add(DuThi entity)
         {
-            _context.Add(entity);
-            return Repository.SaveChanged(_context);
+            try
+            {
+                _context.Add(entity);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+           
         }
         public bool ExistDuThi(int khoathi, string cccd)
         {
