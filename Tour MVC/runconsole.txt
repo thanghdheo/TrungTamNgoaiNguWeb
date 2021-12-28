@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Data Source=THNGA406\BO;Initial Catalog=TrungTamNgoaiNgu;Integrated Security=True" Microsoft.EntityFrameWorkCore.SqlServer -outputdir Models -context EnglishDbContext -contextdir Models -DataAnnotations -Force

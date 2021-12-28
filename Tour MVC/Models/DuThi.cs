@@ -12,14 +12,11 @@ namespace Tour_MVC.Models
     public partial class DuThi
     {
         [Key]
-        [Required(ErrorMessage = "Vui lòng nhập trường này")]
         public int MaKhoaThi { get; set; }
         [Key]
         [Column("CCCD")]
-        [StringLength(12, ErrorMessage = "Chứng minh có 12 ký tự")]
-        [Required(ErrorMessage = "Vui lòng nhập trường này")]
+        [StringLength(12)]
         public string Cccd { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập trường này")]
         public int MaTrinhDo { get; set; }
 
         [ForeignKey(nameof(Cccd))]
