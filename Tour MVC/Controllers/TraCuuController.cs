@@ -12,14 +12,11 @@ namespace Tour_MVC.Controllers
 
         private readonly ThiSinhRepository _thiSinh;
 
-        private List<NguoiDung> nguoiDungs;
-
         private List<ThiSinh> thiSinhs;
         public TraCuuController(EnglishDbContext context)
         {
             _nguoiDung = new NguoiDungRepository(context);
             _thiSinh = new ThiSinhRepository(context);
-            nguoiDungs = new List<NguoiDung>();
             thiSinhs = new List<ThiSinh>();
         }
         public IActionResult Index()
@@ -31,22 +28,47 @@ namespace Tour_MVC.Controllers
         {
             if(thiSinhs.Count == 0)
             {
-                thiSinhs = _thiSinh.DanhSachKetQua(cccd);
-                ViewBag.name = thiSinhs[0].CccdNavigation.HoNguoiDung + " " + thiSinhs[0].CccdNavigation.TenNguoiDung;
+                if (_nguoiDung.Exist(cccd))
+                {
+                    if (_thiSinh.KiemTraThiChua(cccd))
+                    {
+                        thiSinhs = _thiSinh.DanhSachKetQua(cccd);
+                        ViewBag.name = thiSinhs[0].CccdNavigation.HoNguoiDung + " " + thiSinhs[0].CccdNavigation.TenNguoiDung;
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Người dùng này chưa thi";
+                        return Redirect("Index");
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = "Không tìm thấy người dùng có cccd này";
+                    return Redirect("Index");
+                }
             }
             return View(thiSinhs);
         }
 
         public IActionResult ThongTin(string cccd)
         {
-            NguoiDung nguoiDung = _nguoiDung.finddById(cccd);
-            return View(nguoiDung);
+            if (_nguoiDung.Exist(cccd))
+            {
+                NguoiDung nguoiDung = _nguoiDung.finddById(cccd);
+                return View(nguoiDung);
+            }
+            else
+            {
+                TempData["Message"] = "Không tìm thấy người dùng có cccd này";
+                return Redirect("/PhongThi/Index");
+            }
+          
         }
 
         public IActionResult ajaxNguoiDung(string value)
         {
-            nguoiDungs = _nguoiDung.DanhSachTraCuu(value);
-            return Json(nguoiDungs);
+            var thiSinhs = _nguoiDung.DanhSachTraCuu(value);
+            return Json(thiSinhs);
         }
 
         

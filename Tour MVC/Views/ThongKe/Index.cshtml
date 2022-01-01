@@ -1,4 +1,9 @@
-﻿<h4>Thống kê</h4>
+﻿@{
+    ViewData["Title"] = "Thống kê";
+}
+
+
+<h4>Thống kê</h4>
 <hr />    
 <div style="min-width:300px" class="border border-dark border-5 rounded">
         <div style="padding:16px">
@@ -19,20 +24,43 @@
     <div class="col-sm-6">
         <div class ="card">
             <div class="card-header">
-               Thống kê
+               Thống kê số lượng phòng thi
             </div>
             <div class="card-body">
-                <canvas class="my-4 h-25" id="bar"></canvas>
+                <canvas class="my-4 h-25" id="barpt"></canvas>
             </div>
         </div>
     </div>
     <div class="col-sm-6">
         <div class ="card">
             <div class="card-header">
-                Thống kê
+               Thống kê số lượng thí sinh
             </div>
             <div class="card-body">
-                <canvas class="my-4 h-25" id="pie"></canvas>
+                <canvas class="my-4 h-25" id="barts"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-sm-6">
+        <div class ="card">
+            <div class="card-header">
+               Thống kê số lượng phòng thi
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 h-25" id="piept"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class ="card">
+            <div class="card-header">
+              Thống kê số lượng thí sinh
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 h-25" id="piets"></canvas>
             </div>
         </div>
     </div>
@@ -55,8 +83,10 @@
             });
         });
 
-        var mybarhart = null;
-        var mypieChart = null;
+        var mybarhartts = null;
+        var mypieChartts = null;
+        var mybarhartpt = null;
+        var mypieChartpt = null;
 
         function getRandomColor() {
             var letters = '0123456789ABCDEF'.split('');
@@ -76,45 +106,85 @@
         }
 
         function getThongKe(data){
-            var lables = ['Số lượng khoá thi', 'Số lượng phòng thi A2','Số lượng phòng thi B1','Số lượng thí sinh A2','Số lượng thí sinh B1'];
-            var datas =[];
-            $.each(data,(index,item) => {
-                datas.push(item);
-            })
+            var lablespt = ['Số lượng khoá thi', 'Số lượng phòng thi A2','Số lượng phòng thi B1'];
+            var dataspt =[];
+            var lablests = ['Số lượng khoá thi', 'Số lượng thí sinh A2','Số lượng thí sinh B1'];
+            var datasts =[];
 
-            console.log(lables);
-            console.log(datas);
-            if(mybarhart != null){
-                mybarhart.destroy();
+                dataspt.push(data.slKhoaThi);
+                dataspt.push(data.slPhongThiA2);
+                dataspt.push(data.slPhongThiB1);
+                datasts.push(data.slKhoaThi);
+                datasts.push(data.slThiSinhA2);
+                datasts.push(data.slThiSinhB1);
+
+            if(mybarhartpt != null){
+                mybarhartpt.destroy();
             }
-            var barchart = document.getElementById('bar').getContext('2d');
-            var barchartdata = {
-                    labels: lables,
+            var barchartpt = document.getElementById('barpt').getContext('2d');
+            var barchartdatapt = {
+                    labels: lablespt,
                     datasets: [{
                         label: '',
-                        data: datas,
-                        backgroundColor: getRandomColorEachEmployee(lables.length),
+                        data: dataspt,
+                        backgroundColor: getRandomColorEachEmployee(lablespt.length),
 
                     }]
                 }
-            mybarhart = new Chart(barchart,{
+            mybarhartpt = new Chart(barchartpt,{
                 type : 'bar',
-                data:barchartdata,
+                data:barchartdatapt,
+            })
+
+            
+            if(mybarhartts != null){
+                mybarhartts.destroy();
+            }
+            var barchartts = document.getElementById('barts').getContext('2d');
+            var barchartdatats = {
+                    labels: lablests,
+                    datasets: [{
+                        label: '',
+                        data: datasts,
+                        backgroundColor: getRandomColorEachEmployee(lablests.length),
+
+                    }]
+                }
+            mybarhartts = new Chart(barchartts,{
+                type : 'bar',
+                data:barchartdatats,
             })
            
 
-            if(mypieChart != null){
-                mypieChart.destroy();
+            if(mypieChartpt != null){
+                mypieChartpt.destroy();
             }
-            var piechart = document.getElementById('pie').getContext('2d');
-            mypieChart = new Chart(piechart,{
+            var piechartpt = document.getElementById('piept').getContext('2d');
+            mypieChartpt = new Chart(piechartpt,{
                 type : 'pie',
                 data:{
-                    labels: lables,
+                    labels: lablespt,
                     datasets: [{
                         label: 'Bar chart',
-                        data: datas,
-                         backgroundColor: getRandomColorEachEmployee(lables.length),
+                        data: dataspt,
+                         backgroundColor: getRandomColorEachEmployee(lablespt.length),
+
+                    }]
+                }
+            })
+
+            if(mypieChartts != null){
+                mypieChartts.destroy();
+            }
+            var piechartts = document.getElementById('piets').getContext('2d');
+            mypieChartts = new Chart(piechartts,{
+                type : 'pie',
+                data:{
+                    labels: lablests,
+                    datasets: [{
+                        label: 'Bar chart',
+                        data: datasts,
+                         backgroundColor: getRandomColorEachEmployee(lablests.length),
 
                     }]
                 }

@@ -22,8 +22,17 @@ namespace Tour_MVC.Controllers
 
         public IActionResult ChungNhan(int maphong,string cccd)
         {
-            thiSinh = _thiSinh.findById(maphong,cccd);
-            return View(thiSinh);
+            if (_thiSinh.Exist(maphong, cccd))
+            {
+                thiSinh = _thiSinh.findById(maphong, cccd);
+                return View(thiSinh);
+            }
+            else
+            {
+                TempData["Message"] = "Không tìm thấy người dùng có cccd này";
+                return Redirect("Index");
+            }
+           
         }
 
         public virtual JsonResult ajaxChungNhanKetQua(string SBD)

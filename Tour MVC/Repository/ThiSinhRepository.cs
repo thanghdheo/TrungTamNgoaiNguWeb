@@ -65,5 +65,22 @@ namespace Tour_MVC.Repository
                      };
             return qr.ToList();
         }
+
+        public bool Exist (int maphong, string cccd)
+        {
+            ThiSinh thiSinh = _context.ThiSinhs.Find(maphong, cccd);
+            if(thiSinh != null)
+                return true;
+            return false;
+        }
+
+        public bool KiemTraThiChua(string cccd)
+        {
+            ThiSinh thiSinh = _context.ThiSinhs.Where(s => s.Cccd == cccd).FirstOrDefault();
+            if (thiSinh != null)
+                return true;
+            return false;
+        }
+
     }
 }

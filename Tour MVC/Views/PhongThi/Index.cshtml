@@ -1,4 +1,13 @@
-﻿@model IEnumerable<Tour_MVC.Models.ThiSinh>
+﻿@{
+    ViewData["Title"] = "Tra cứu phòng thi";
+}
+
+@if(TempData["Message"] != null)
+{
+    <div class="alert alert-info ">
+        @TempData["Message"]
+    </div>
+}
 
 <div id="main">
     <div style="min-width:300px" class="border border-dark border-5 rounded">
@@ -18,48 +27,6 @@
             </div>
         </div>
     </div>
-    <table class="table table-striped table-bordered table-hover mt-3">
-    <thead>
-        <tr>
-            <th>
-                Số báo danh
-            </th>
-            <th>
-                Họ và tên
-            </th>
-            <th>
-                Khoá thi
-            </th>
-            <th>
-                Phòng thi
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sbd)
-                </td>
-                 <td>
-                    @item.CccdNavigation.HoNguoiDung @item.CccdNavigation.TenNguoiDung
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaPhongNavigation.MaKhoaThiNavigation.TenKhoa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaPhongNavigation.TenPhong)
-                </td>
-                <td>
-                        <a class = "btn btn-info"    asp-controller="TraCuu" asp-action="ThongTin" asp-route-cccd="@item.Cccd">Thông tin thí sinh</a>
-                        <a class = "btn btn-warning" asp-controller="TraCuu" asp-action="TraCuu" asp-route-cccd="@item.Cccd">Kết quả thi</a>
-                        <a class = "btn btn-success" asp-controller="ChungNhan" asp-action="ChungNhan" asp-route-maphong="@item.MaPhong" asp-route-cccd="@item.Cccd" >Chứng nhận kết quả</a>
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>
 </div>
 
 
@@ -101,7 +68,7 @@
                                 row.insertCell(3).innerHTML = item.maPhongNavigation.tenPhong;
                                 row.insertCell(4).innerHTML = ` <a class = "btn btn-info"    href="/TraCuu/ThongTin?cccd=${item.cccd}">Thông tin thí sinh</a>
                                                                 <a class = "btn btn-warning" href="/TraCuu/TraCuu?cccd=${item.cccd}">Kết quả thi</a>
-                                                                <a class = "btn btn-success" href="/ChungNhan/ChungNhan?maphong=${item.maPhong}&cccd=${item.cccd}">Chứng nhận kết quả</a>`                       
+                                                                <a class = "btn btn-success" href="/ChungNhan/ChungNhan?maphong=${item.maPhongNavigation.maPhong}&cccd=${item.cccd}">Chứng nhận kết quả</a>`                       
                             })
 
                             var header = table.createTHead();

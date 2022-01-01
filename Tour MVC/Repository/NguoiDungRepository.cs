@@ -12,6 +12,20 @@ namespace Tour_MVC.Repository
         {
             this._context = context;
         }
+
+        public bool Register(NguoiDung nguoiDung)
+        {
+            try
+            {
+                _context.Add(nguoiDung);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public bool Exist(string cccd)
         {
             NguoiDung nguoiDung = _context.NguoiDungs.Find(cccd);

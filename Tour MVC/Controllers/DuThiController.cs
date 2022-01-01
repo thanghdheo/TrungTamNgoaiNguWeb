@@ -36,7 +36,7 @@ namespace Tour_MVC
         {
             if(khoaThis.Count == 0)
             {
-                khoaThis = _khoaThi.getAll();
+                khoaThis = _khoaThi.getAll().FindAll(s => s.ChotSo == false);
             }
 
             if(trinhDos.Count == 0)
@@ -59,12 +59,12 @@ namespace Tour_MVC
                     {
                         if (_duThi.Add(duThi))
                         {
-                            TempData["Message"] = "Thêm thành công";
+                            TempData["Message"] = "Đăng ký thành công";
                             return Redirect("DuThi/Index");
                         }
                         else
                         {
-                            TempData["Message"] = "Thêm thất bại";
+                            TempData["Message"] = "Đăng ký thất bại";
                             return Redirect("DuThi/Index");
                         }
                     }

@@ -36,7 +36,7 @@ namespace Tour_MVC.Controllers
             }
             if (khoaThis.Count == 0)
             {
-                khoaThis = _khoaThi.getAll();
+                khoaThis = _khoaThi.getAll().FindAll(s => s.ChotSo == true);
             }
 
             ViewBag.selectListKhoaThi = new SelectList(khoaThis, "MaKhoaThi", "TenKhoa");

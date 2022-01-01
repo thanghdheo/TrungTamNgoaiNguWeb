@@ -1,4 +1,15 @@
-﻿<h4>Tra cứu kết quả thi</h4>
+﻿@{
+    ViewData["Title"] = "Tra cứu kết quả thi";
+}
+
+@if(TempData["Message"] != null)
+{
+    <div class="alert alert-info ">
+        @TempData["Message"]
+    </div>
+}
+
+<h4>Tra cứu kết quả thi</h4>
 <hr />
 <div id="main">
     <div style="min-width:300px" class="border border-dark border-5 rounded">

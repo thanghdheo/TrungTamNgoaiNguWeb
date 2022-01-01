@@ -18,8 +18,9 @@ namespace Tour_MVC.Models
         }
 
         [Key]
-        [Column("CCCD")]
-        [StringLength(12)]
+        [StringLength(12, MinimumLength = 12, ErrorMessage = "Căn cước công dân có 12 ký tự")]
+        [Range(0, long.MaxValue, ErrorMessage = "Chứng minh không hợp lệ")]
+        [Required]
         public string Cccd { get; set; }
         [Required]
         public string HoNguoiDung { get; set; }
@@ -34,8 +35,9 @@ namespace Tour_MVC.Models
         public DateTime NgayCap { get; set; }
         [Required]
         public string NoiCap { get; set; }
-        [Required]
-        [StringLength(10)]
+        [StringLength(10, MinimumLength = 10, ErrorMessage = "Số điện thoại có 10 ký tự")]
+        [Range(0, int.MaxValue, ErrorMessage = "Số điện thoại không hợp lệ")]
+        [Required(ErrorMessage = "Vui lòng nhập trường này")]
         public string SoDienThoai { get; set; }
         [Required]
         public string Email { get; set; }

@@ -50,7 +50,7 @@ namespace Tour_MVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=DuThi}/{action=Index}/{id?}");
+                    pattern: "{controller=DangKy}/{action=Index}/{id?}");
             });
         }
     }
